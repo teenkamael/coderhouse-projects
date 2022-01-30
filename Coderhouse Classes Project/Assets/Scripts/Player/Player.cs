@@ -8,7 +8,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] float healthPoints = 75f;
 
-
+    [SerializeField] GunControllerScript gun;
+    [SerializeField] ThirdPersonMovement movement;
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -19,7 +20,9 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetMouseButtonDown(0)){ 
+            CustomWeaponAction.Attack(movement.moveDirection);
+        }
     }
 
     public void GetDamage(float damage)
