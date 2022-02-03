@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour, IThrowable
 {
-    [SerializeField] float speed = 5f;
+    #region SerializedFields
+    [SerializeField] float speed = 20f;
     public Vector3 direction;
-    [SerializeField] bool dissapear = true;
-    [SerializeField] float timeToRemove = 5f;
+    [SerializeField] bool dissapear = false;
 
+    [SerializeField] float timeToRemove = 5f;
+    private float timer = 0f;
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
@@ -18,13 +21,15 @@ public class BulletController : MonoBehaviour, IThrowable
     // Update is called once per frame
     void Update()
     {
-        Move(direction, speed);
         if (timeToRemove > 0f)
         {
-            timeToRemove -= Time.deltaTime;
+            timeToRemove += Time.deltaTime;
         }
-        else if (dissapear)
+        else
+            dissapear = true;
+        if (dissapear)
             Destroy(this);
+        Move(direction, speed);
     }
 
     public void Move(Vector3 direction, float speed)

@@ -15,7 +15,7 @@ public class ThirdPersonMovement : MonoBehaviour
         get { return _moveDirection; }
     }
 
-    private Vector3 _moveDirection;
+    private Vector3 _moveDirection = Vector3.forward;
     float turnSmoothVelocity;
     // Update is called once per frame
     void Update()

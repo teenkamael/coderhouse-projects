@@ -5,15 +5,17 @@ public class GunControllerScript : MonoBehaviour, IShootableObject
 
 
     [SerializeField] BulletController bulletType;
+    [SerializeField] GameObject pointOnShoot;
+    
 
     void Start()
     {
+        CustomWeaponAction.Attack += Shoot;
 
     }
 
     void Update()
     {
-        CustomWeaponAction.Attack += Shoot;
     }
 
     public void Shoot(Vector3 direction)
@@ -25,6 +27,6 @@ public class GunControllerScript : MonoBehaviour, IShootableObject
 
     private void InstantiateBullet(BulletController bullet)
     {
-        Instantiate(bullet, this.transform, false);
+        Instantiate(bullet, pointOnShoot.transform.position, Quaternion.identity);
     }
 }
