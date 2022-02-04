@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] GunControllerScript gun;
     [SerializeField] ThirdPersonMovement movement;
-    [SerializeField] float coolDown = 2f;
+    [SerializeField] float coolDown = 1f;
     private bool canShoot = true;
     private float timer = 0f;
     #endregion
@@ -23,9 +23,10 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && canShoot)
         {
             CustomWeaponAction.Attack(movement.moveDirection);
+            canShoot = false;
         }
         if (Input.GetMouseButtonDown(1) && canShoot)
         {
@@ -33,18 +34,19 @@ public class Player : MonoBehaviour
             {
                 Vector3 direction = new Vector3(movement.moveDirection.x * (i - 30f * Time.deltaTime) * 10f, movement.moveDirection.y, movement.moveDirection.z).normalized;
                 CustomWeaponAction.Attack(direction);
-
             }
+            canShoot = false;
         }
+            
         if (!canShoot)
             timer += Time.deltaTime;
-        if(timer > coolDown)
+        if (timer > coolDown)
         {
             timer = 0f;
             canShoot = true;
         }
 
-        
+
     }
 
     public void GetDamage(float damage)
