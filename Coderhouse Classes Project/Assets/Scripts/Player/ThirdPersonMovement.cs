@@ -9,7 +9,7 @@ public class ThirdPersonMovement : MonoBehaviour
     [SerializeField] float speedMovement = 6f;
     [SerializeField] float speedIncreaseOnSprint = 20f;
     [SerializeField] float turnSmoothTime = 0.04f;
-    [SerializeField] Transform cam;
+    [SerializeField] CameraController camController;
     public Vector3 moveDirection
     {
         get { return _moveDirection; }
@@ -23,6 +23,10 @@ public class ThirdPersonMovement : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+        Transform cam = camController.cameras[0].transform;
+        foreach (GameObject camera in camController.cameras)
+            if (camera.activeSelf)
+                cam = camera.transform;
 
         if (direction.magnitude >= 0.1f)
         {
