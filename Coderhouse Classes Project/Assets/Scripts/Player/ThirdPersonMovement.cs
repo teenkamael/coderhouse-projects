@@ -9,24 +9,22 @@ public class ThirdPersonMovement : MonoBehaviour
     [SerializeField] float speedMovement = 6f;
     [SerializeField] float speedIncreaseOnSprint = 20f;
     [SerializeField] float turnSmoothTime = 0.04f;
-    [SerializeField] CameraController camController;
+    [SerializeField] private Animator animator;
+
     public Vector3 moveDirection
     {
         get { return _moveDirection; }
     }
-
+    [SerializeField] Transform cam;
     private Vector3 _moveDirection = Vector3.forward;
     float turnSmoothVelocity;
+
     // Update is called once per frame
     void Update()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-        Transform cam = camController.cameras[0].transform;
-        foreach (GameObject camera in camController.cameras)
-            if (camera.activeSelf)
-                cam = camera.transform;
 
         if (direction.magnitude >= 0.1f)
         {
@@ -38,10 +36,15 @@ public class ThirdPersonMovement : MonoBehaviour
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             _moveDirection = moveDir;
             controller.Move(moveDir.normalized * realSpeedMovement() * Time.deltaTime);
+            animator.SetBool("IsRunning", true);
+        }
+        else
+        {
+            animator.SetBool("IsRunning", false);
         }
 
     }
-
+    
     private bool userIsSprinting()
     {
         return Input.GetKey(KeyCode.LeftShift);

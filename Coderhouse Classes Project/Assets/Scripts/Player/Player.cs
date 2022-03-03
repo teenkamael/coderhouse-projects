@@ -7,45 +7,18 @@ public class Player : MonoBehaviour
     #region Fields
 
     [SerializeField] float healthPoints = 75f;
-
-    [SerializeField] GunControllerScript gun;
-    [SerializeField] ThirdPersonMovement movement;
-    [SerializeField] float coolDown = 1f;
-    private bool canShoot = true;
-    private float timer = 0f;
+    
     #endregion
     // Start is called before the first frame update
     void Start()
     {
-
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && canShoot)
-        {
-            CustomWeaponAction.Attack(movement.moveDirection);
-            canShoot = false;
-        }
-        if (Input.GetMouseButtonDown(1) && canShoot)
-        {
-            for (int i = 0; i < 8; i++)
-            {
-                Vector3 direction = new Vector3(movement.moveDirection.x * (i - 30f * Time.deltaTime) * 10f, movement.moveDirection.y, movement.moveDirection.z).normalized;
-                CustomWeaponAction.Attack(direction);
-            }
-            canShoot = false;
-        }
-            
-        if (!canShoot)
-            timer += Time.deltaTime;
-        if (timer > coolDown)
-        {
-            timer = 0f;
-            canShoot = true;
-        }
-
+        
 
     }
 
