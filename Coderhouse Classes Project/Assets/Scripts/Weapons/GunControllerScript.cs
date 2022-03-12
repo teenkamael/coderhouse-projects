@@ -20,7 +20,6 @@ public class GunControllerScript : MonoBehaviour, IShootableObject
 
     public void Shoot(Vector3 direction)
     {
-        bulletType.direction = direction;
         InstantiateBullet(bulletType);
 
     }

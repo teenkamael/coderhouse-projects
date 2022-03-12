@@ -6,12 +6,11 @@ public class BulletController : MonoBehaviour, IThrowable
 {
     #region SerializedFields
     [SerializeField] float speed = 20f;
-    public Vector3 direction;
-
     [SerializeField] float timeToRemove = 50f;
-    private float timer = 0f;
-    [SerializeField] private bool canResizeMoreThanOnce = false;    
-    private bool canResize = true;
+    [SerializeField] public float damage = 25f;
+    [SerializeField] private ProjectileType type;
+
+    private float timer = 0f; 
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -29,21 +28,21 @@ public class BulletController : MonoBehaviour, IThrowable
             timer = 0f;
             Destroy(gameObject);
         }
-        Move(direction, speed);
-        if(Input.GetKeyDown(KeyCode.Space) && canResize)
-        {
-            Resize();
-            canResize = canResizeMoreThanOnce;
-        }
+        Move(speed);
     }
 
-    public void Move(Vector3 direction, float speed)
+    public void Move(float speed)
     {
-        transform.Translate(speed * Time.deltaTime * direction);
+        transform.Translate(speed * Time.deltaTime * Vector3.forward);
 
     }
 
-    public void Resize(){ 
-        transform.localScale = new Vector3(transform.localScale.x * 2, transform.localScale.y * 2, transform.localScale.z * 2);
+    public void OnCollisionEnter(Collision collision)
+    { 
+        Destroy(gameObject);
+    }
+
+    public ProjectileType GetProjectileType(){
+        return type;
     }
 }
