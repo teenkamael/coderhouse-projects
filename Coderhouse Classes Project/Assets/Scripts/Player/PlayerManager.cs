@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager instance;
@@ -11,7 +11,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private List<Projectile> reflectableProjectiles;
     private static List<Projectile> _reflectableProjectiles;
     private static List<Projectile> storedProjectiles = new List<Projectile>();
-    private static float healthPoints = 75f;
+    private static float healthPoints = 100f;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -37,7 +37,17 @@ public class PlayerManager : MonoBehaviour
     public static void TakeDamage(float damage)
     {
         healthPoints -= damage;
-        Debug.Log("Tu vida es de: " + healthPoints);
+        if (healthPoints > 0)
+        {
+            Debug.Log("Tu vida es de: " + healthPoints);
+        }
+        else
+        {
+            Debug.ClearDeveloperConsole();
+            Debug.Log("Ufff F, otra vez?");
+            healthPoints = 100f;
+            SceneManager.LoadScene(0);
+        }
     }
 
     public static void StoreProjectile(ProjectileType type)

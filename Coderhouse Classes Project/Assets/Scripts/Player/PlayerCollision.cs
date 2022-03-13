@@ -25,7 +25,6 @@ public class PlayerCollision : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(gameObject.name + " collide with " + collision.gameObject.name);
         
     }
 
